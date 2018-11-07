@@ -11,9 +11,9 @@ my_bytes.append(0)
 my_bytes.append(0)
 my_bytes.append(0)
 
-sock.send(my_bytes);
-sock.send("Initiate transfer protocol")
-challenge = sock.recv(1024);
+sock.sendall(my_bytes);
+sock.sendall("Initiate transfer protocol")
+challenge = sock.recv(16);
 
 b = bytearray(challenge)
 test  = binascii.hexlify(b)
@@ -27,21 +27,23 @@ my_bytes.append(0)
 my_bytes.append(0)
 my_bytes.append(0)
 
-sock.send(my_bytes);
-sock.send(password)
+sock.sendall(my_bytes);
+sock.sendall(password)
 
 print sock.recv(1024)
-time.sleep(1)
+print sock.recv(1024)
+print "recv2"
 print sock.recv(1024)
 
-string = "list_files"
-my_bytes = bytearray()
-my_bytes.append(len(string))
-my_bytes.append(0)
-my_bytes.append(0)
-my_bytes.append(0)
+while(True):
+  string = raw_input("enter command:")
+  my_bytes = bytearray()
+  my_bytes.append(len(string))
+  my_bytes.append(0)
+  my_bytes.append(0)
+  my_bytes.append(0)
 
-sock.send(my_bytes);
-sock.send(string)
+  sock.send(my_bytes);
+  sock.send(string)
 
-print sock.recv(1024)
+  print sock.recv(1024)
